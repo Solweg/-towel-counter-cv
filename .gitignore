@@ -1,0 +1,28 @@
+# Environnement virtuel
+venv/
+env/
+__pycache__/
+*.pyc
+
+# Données (images brutes et annotées - trop volumineuses pour Git)
+data/raw/
+data/images/
+data/labels/
+*.jpg
+*.jpeg
+*.png
+
+# Modèles entraînés (poids lourds)
+models/*.pt
+!models/.gitkeep
+
+# Notebooks checkpoints
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
