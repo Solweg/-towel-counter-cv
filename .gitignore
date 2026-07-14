@@ -19,6 +19,14 @@ models/*.pt
 # Notebooks checkpoints
 .ipynb_checkpoints/
 
+# Pytest / coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Fichiers d'environnement (si un jour tu ajoutes des clés API)
+.env
+
 # OS
 .DS_Store
 Thumbs.db
