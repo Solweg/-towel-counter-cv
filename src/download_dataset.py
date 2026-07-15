@@ -1,6 +1,10 @@
 """
-Script de téléchargement du dataset "towel detection" depuis Roboflow Universe.
-Source : https://universe.roboflow.com/zezamii/towel-detection-1xa8w
+Script de téléchargement du dataset "towel detection" (version filtrée)
+depuis le workspace Roboflow personnel.
+
+Source originale : https://universe.roboflow.com/zezamii/towel-detection-1xa8w
+Fork personnel après tri manuel (conservation des serviettes pliées/roulées
+uniquement, 209 images sur 307) : workspace hlnes-workspace-zlfgw
 Licence : CC BY 4.0
 """
 
@@ -8,7 +12,7 @@ import os
 from dotenv import load_dotenv
 from roboflow import Roboflow
 
-load_dotenv()  # charge les variables depuis le fichier .env
+load_dotenv()
 
 API_KEY = os.getenv("ROBOFLOW_API_KEY")
 
@@ -19,9 +23,8 @@ if not API_KEY:
     )
 
 rf = Roboflow(api_key=API_KEY)
-project = rf.workspace("zezamii").project("towel-detection-1xa8w")
+project = rf.workspace("hlnes-workspace-zlfgw").project("towel-detection-1xa8w-ofnju")
 version = project.version(1)
-dataset = version.download("yolov8", location="data/raw/towel-detection")
+dataset = version.download("yolov8", location="data/raw/towel-detection-filtered")
 
-print(f"Dataset téléchargé dans : {dataset.location}")
-
+print(f"Dataset filtré téléchargé dans : {dataset.location}")
