@@ -49,3 +49,27 @@ pip install -r requirements.txt
 ## Statut du projet
 
 En cours de développement.
+### Limite identifiée : détection sur piles de serviettes empilées
+
+Le modèle entraîné (mAP50 = 0.995 sur le set de test) donne d'excellents
+résultats sur des serviettes isolées, similaires à celles du dataset
+d'entraînement. Un test sur une image réelle de pile de 4 serviettes
+empilées a révélé une limite claire : le modèle détecte l'ensemble de la
+pile comme **une seule instance** (`towel 0.84`), sans distinguer les
+4 unités individuelles pourtant visuellement séparées par des plis nets.
+
+**Cause identifiée** : le dataset d'entraînement (209 images, après tri
+manuel) ne contient que des images à serviette unique, isolée. Le modèle
+n'a donc jamais été exposé à des exemples d'instances empilées/contiguës
+pendant l'apprentissage, et n'a pas appris à distinguer les frontières
+entre plusieurs objets identiques adjacents.
+
+**Piste d'amélioration identifiée (hors périmètre de ce POC)** : enrichir
+le dataset avec des images de piles réelles, annotées avec une bounding
+box par serviette individuelle, pour permettre au modèle d'apprendre la
+notion de séparation d'instances empilées.
+
+Ce résultat, bien que négatif par rapport à l'objectif final visé, valide
+la pertinence de la méthodologie (transfer learning, pipeline complet) et
+illustre l'importance de la diversité du dataset d'entraînement par
+rapport aux cas d'usage réels visés.
