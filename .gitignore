@@ -12,8 +12,14 @@ data/labels/
 *.jpeg
 *.png
 
-# Modèles entraînés (poids lourds)
-models/*.pt
+# Cache de labels Ultralytics
+*.cache
+
+# Résultats d'entraînement Ultralytics (poids, logs, graphiques)
+runs/
+
+# Modèles entraînés (poids lourds) - où qu'ils soient dans le projet
+*.pt
 !models/.gitkeep
 
 # Notebooks checkpoints
