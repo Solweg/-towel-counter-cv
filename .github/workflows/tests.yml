@@ -1,0 +1,39 @@
+name: Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout du code
+        uses: actions/checkout@v4
+
+      - name: Installation de Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Installation des dépendances
+        run: pip install -r requirements.txt
+
+      - name: Préparation des dossiers de données
+        run: |
+          mkdir -p data/raw data/images/train data/images/val data/images/test
+          mkdir -p data/labels/train data/labels/val data/labels/test
+
+      - name: Téléchargement du dataset filtré depuis Roboflow
+        env:
+          ROBOFLOW_API_KEY: ${{ secrets.ROBOFLOW_API_KEY }}
+        run: python3 src/download_dataset.py
+
+      - name: Split train/val/test du dataset
+        run: python3 src/prepare_dataset.py
+
+      - name: Exécution des tests de structure du dataset
+        run: pytest tests/test_dataset_structure.py -v
